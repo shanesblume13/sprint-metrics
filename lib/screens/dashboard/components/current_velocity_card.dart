@@ -1,16 +1,16 @@
-import 'package:admin/models/MyFiles.dart';
+import 'package:admin/models/TeamVelocityInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
-class FileInfoCard extends StatelessWidget {
-  const FileInfoCard({
+class CurrentVelocityCard extends StatelessWidget {
+  const CurrentVelocityCard({
     Key? key,
     required this.info,
   }) : super(key: key);
 
-  final CloudStorageInfo info;
+  final TeamVelocityInfo info;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +29,18 @@ class FileInfoCard extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.all(defaultPadding * 0.75),
-                height: 40,
-                width: 40,
                 decoration: BoxDecoration(
                   color: info.color!.withOpacity(0.1),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
-                child: SvgPicture.asset(
-                  info.svgSrc!,
+                child: Icon(
+                  info.icon,
                   color: info.color,
                 ),
+                // child: SvgPicture.asset(
+                //   info.iconData!,
+                //   color: info.color,
+                // ),
               ),
               Icon(Icons.more_vert, color: Colors.white54)
             ],
@@ -50,24 +52,24 @@ class FileInfoCard extends StatelessWidget {
           ),
           ProgressLine(
             color: info.color,
-            percentage: info.percentage,
+            percentage: infoToProgressPercent(),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${info.numOfFiles} Files",
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white70),
-              ),
-              Text(
-                info.totalStorage!,
+                "V: ${info.velocity}",
                 style: Theme.of(context)
                     .textTheme
                     .caption!
                     .copyWith(color: Colors.white),
+              ),
+              Text(
+                'G: ${info.goal}',
+                style: Theme.of(context)
+                    .textTheme
+                    .caption!
+                    .copyWith(color: Colors.white70),
               ),
             ],
           )
@@ -75,6 +77,9 @@ class FileInfoCard extends StatelessWidget {
       ),
     );
   }
+
+  double infoToProgressPercent() =>
+      100 * (info.velocity?.toDouble() ?? 0) / (info.goal?.toDouble() ?? 100);
 }
 
 class ProgressLine extends StatelessWidget {
@@ -85,7 +90,7 @@ class ProgressLine extends StatelessWidget {
   }) : super(key: key);
 
   final Color? color;
-  final int? percentage;
+  final double? percentage;
 
   @override
   Widget build(BuildContext context) {
