@@ -1,6 +1,5 @@
 import 'package:admin/models/TeamVelocityInfo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
@@ -58,14 +57,14 @@ class CurrentVelocityCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "V: ${info.velocity}",
+                '${info.velocity} / ${info.goal}',
                 style: Theme.of(context)
                     .textTheme
                     .caption!
                     .copyWith(color: Colors.white),
               ),
               Text(
-                'G: ${info.goal}',
+                "${infoToProgressPercent().toStringAsFixed(0)}%",
                 style: Theme.of(context)
                     .textTheme
                     .caption!

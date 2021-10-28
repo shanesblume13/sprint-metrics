@@ -6,7 +6,7 @@ import '../../constants.dart';
 import 'components/header.dart';
 
 import 'components/recent_files.dart';
-import 'components/storage_details.dart';
+import 'components/weekly_velocity.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -25,12 +25,12 @@ class DashboardScreen extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: [
-                      CurrentVelocity(),
-                      SizedBox(height: defaultPadding),
-                      RecentFiles(),
+                      //CurrentVelocity(),
+                      //SizedBox(height: defaultPadding),
+                      //RecentFiles(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) StarageDetails(),
+                      if (Responsive.isMobile(context)) WeeklyVelocity(),
                     ],
                   ),
                 ),
@@ -40,7 +40,7 @@ class DashboardScreen extends StatelessWidget {
                 if (!Responsive.isMobile(context))
                   Expanded(
                     flex: 2,
-                    child: StarageDetails(),
+                    child: WeeklyVelocity(),
                   ),
               ],
             )
