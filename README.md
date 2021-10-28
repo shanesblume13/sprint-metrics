@@ -1,5 +1,5 @@
 **To Do:**
-- Create shared components for fail rate and velocty (that takes metric type)
+- Create shared components for fail rate and velocty charts
 - Drill down from IT to Team metrics
 - Add developer layer to data structure
 - Add 12wk averages
