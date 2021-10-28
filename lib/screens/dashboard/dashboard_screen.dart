@@ -1,11 +1,8 @@
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/current_velocity.dart';
+import 'package:admin/screens/dashboard/components/weekly_fail_rate.dart';
 import 'package:flutter/material.dart';
-
 import '../../constants.dart';
 import 'components/header.dart';
-
-import 'components/recent_files.dart';
 import 'components/weekly_velocity.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -31,6 +28,9 @@ class DashboardScreen extends StatelessWidget {
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context)) WeeklyVelocity(),
+                      if (Responsive.isMobile(context))
+                        SizedBox(height: defaultPadding),
+                      if (Responsive.isMobile(context)) WeeklyFailRate(),
                     ],
                   ),
                 ),
@@ -41,6 +41,13 @@ class DashboardScreen extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: WeeklyVelocity(),
+                  ),
+                if (!Responsive.isMobile(context))
+                  SizedBox(width: defaultPadding),
+                if (!Responsive.isMobile(context))
+                  Expanded(
+                    flex: 2,
+                    child: WeeklyFailRate(),
                   ),
               ],
             )

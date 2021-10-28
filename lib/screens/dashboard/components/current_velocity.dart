@@ -1,4 +1,4 @@
-import 'package:admin/models/TeamVelocityInfo.dart';
+import 'package:admin/models/MetricInfo.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +67,7 @@ class CurrentVelocityCardGridView extends StatelessWidget {
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: demoCurrentVelocities.length,
+      itemCount: demoCurrentMetrics.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: defaultPadding,
@@ -75,7 +75,7 @@ class CurrentVelocityCardGridView extends StatelessWidget {
         childAspectRatio: childAspectRatio,
       ),
       itemBuilder: (context, index) =>
-          CurrentVelocityCard(info: demoCurrentVelocities[index]),
+          CurrentVelocityCard(info: demoCurrentMetrics[index]),
     );
   }
 }

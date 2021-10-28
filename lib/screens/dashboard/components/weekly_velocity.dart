@@ -1,4 +1,4 @@
-import 'package:admin/models/TeamVelocityInfo.dart';
+import 'package:admin/models/MetricInfo.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -44,8 +44,7 @@ class WeeklyVelocity extends StatelessWidget {
     );
   }
 
-  List<WeeklyVelocityCard> getWeeklyVelocityCards(
-      List<TeamVelocityInfo> sortedList) {
+  List<WeeklyVelocityCard> getWeeklyVelocityCards(List<MetricInfo> sortedList) {
     List<WeeklyVelocityCard> test = [];
 
     for (var item in sortedList) {
@@ -64,57 +63,57 @@ class WeeklyVelocity extends StatelessWidget {
   }
 }
 
-List<TeamVelocityInfo> demoTeamVelocityInfo = [
-  TeamVelocityInfo(
+List<MetricInfo> demoTeamVelocityInfo = [
+  MetricInfo(
     title: "Mobile",
     velocity: 1,
     icon: Icons.phone_android,
     goal: 3,
     color: Colors.yellow,
   ),
-  TeamVelocityInfo(
+  MetricInfo(
     title: "Core Services",
     velocity: 12,
     icon: Icons.speed,
     goal: 15,
     color: Colors.red,
   ),
-  TeamVelocityInfo(
+  MetricInfo(
     title: "Enhancement",
     velocity: 7,
     icon: Icons.new_releases,
     goal: 10,
     color: Colors.blue,
   ),
-  TeamVelocityInfo(
+  MetricInfo(
     title: "Front End",
     velocity: 3,
     icon: Icons.code,
     goal: 15,
     color: Colors.purple,
   ),
-  TeamVelocityInfo(
+  MetricInfo(
     title: "EC",
     velocity: 8,
     icon: Icons.map,
     goal: 15,
     color: Colors.orange,
   ),
-  TeamVelocityInfo(
+  MetricInfo(
     title: "New Dev",
     velocity: 2,
     icon: Icons.science,
     goal: 15,
     color: Colors.green,
   ),
-  TeamVelocityInfo(
+  MetricInfo(
     title: "Design",
     velocity: 2,
     icon: Icons.design_services,
     goal: 15,
     color: Colors.pink,
   ),
-  TeamVelocityInfo(
+  MetricInfo(
     title: "No Team",
     velocity: 2,
     icon: Icons.person,

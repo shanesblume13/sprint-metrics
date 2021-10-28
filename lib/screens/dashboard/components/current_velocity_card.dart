@@ -1,4 +1,4 @@
-import 'package:admin/models/TeamVelocityInfo.dart';
+import 'package:admin/models/MetricInfo.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -9,7 +9,7 @@ class CurrentVelocityCard extends StatelessWidget {
     required this.info,
   }) : super(key: key);
 
-  final TeamVelocityInfo info;
+  final MetricInfo info;
 
   @override
   Widget build(BuildContext context) {

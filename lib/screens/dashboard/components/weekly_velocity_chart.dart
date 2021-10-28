@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:admin/models/TeamVelocityInfo.dart';
+import 'package:admin/models/MetricInfo.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
 class WeeklyVelocityChart extends StatelessWidget {
-  final List<TeamVelocityInfo> teamVelocityInfoList;
+  final List<MetricInfo> teamVelocityInfoList;
 
   const WeeklyVelocityChart({
     Key? key,
@@ -52,7 +52,7 @@ class WeeklyVelocityChart extends StatelessWidget {
 }
 
 List<PieChartSectionData> getPieChartSectionData(
-    List<TeamVelocityInfo> teamVelocityInfoList) {
+    List<MetricInfo> teamVelocityInfoList) {
   List<PieChartSectionData> pieChartSectionData = [];
   for (var info in teamVelocityInfoList) {
     pieChartSectionData.add(
@@ -79,7 +79,7 @@ List<PieChartSectionData> getPieChartSectionData(
   return pieChartSectionData;
 }
 
-int calcTotalVelocity(List<TeamVelocityInfo> demoTeamVelocityInfo) {
+int calcTotalVelocity(List<MetricInfo> demoTeamVelocityInfo) {
   int totalVelocity = 0;
 
   for (var item in demoTeamVelocityInfo) {
