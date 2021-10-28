@@ -1,82 +1,27 @@
 import 'dart:math';
 
 import 'package:admin/models/MetricInfo.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:admin/screens/dashboard/components/current_metric_pie_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
 class CurrentVelocityChart extends StatelessWidget {
-  final List<MetricInfo> teamVelocityInfoList;
+  final List<MetricInfo> currentMetricList;
 
   const CurrentVelocityChart({
     Key? key,
-    required this.teamVelocityInfoList,
+    required this.currentMetricList,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: Stack(
-        children: [
-          PieChart(
-            PieChartData(
-              sectionsSpace: 0,
-              centerSpaceRadius: 70,
-              startDegreeOffset: -90,
-              sections: getPieChartSectionData(teamVelocityInfoList),
-            ),
-          ),
-          Positioned.fill(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: defaultPadding),
-                Text(
-                  calcTotalVelocity(teamVelocityInfoList).toString(),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        height: 0.5,
-                      ),
-                ),
-                Text("of 41")
-              ],
-            ),
-          ),
-        ],
-      ),
+    return CurrentMetricPieChart(
+      title: calcTotalVelocity(currentMetricList).toString(),
+      subTitle: "of 41",
+      pieChartData: getCurrentMetricPieChartData(currentMetricList),
     );
   }
-}
-
-List<PieChartSectionData> getPieChartSectionData(
-    List<MetricInfo> teamVelocityInfoList) {
-  List<PieChartSectionData> pieChartSectionData = [];
-  for (var info in teamVelocityInfoList) {
-    pieChartSectionData.add(
-      PieChartSectionData(
-        color: info.color,
-        value: info.ptsToQA?.toDouble() ?? 0,
-        showTitle: false,
-        radius: 20,
-      ),
-    );
-  }
-
-  pieChartSectionData.sort((a, b) => b.value.compareTo(a.value));
-
-  pieChartSectionData.add(
-    PieChartSectionData(
-      color: primaryColor.withOpacity(0.15),
-      value: max(41 - calcTotalVelocity(teamVelocityInfoList).toDouble(), 0),
-      showTitle: false,
-      radius: 5,
-    ),
-  );
-
-  return pieChartSectionData;
 }
 
 int calcTotalVelocity(List<MetricInfo> demoTeamVelocityInfo) {
@@ -87,4 +32,28 @@ int calcTotalVelocity(List<MetricInfo> demoTeamVelocityInfo) {
   }
 
   return totalVelocity;
+}
+
+List<PieChartMetricData> getCurrentMetricPieChartData(
+    List<MetricInfo> currentMetricList) {
+  List<PieChartMetricData> chartData = [];
+  for (var info in currentMetricList) {
+    chartData.add(PieChartMetricData(
+      color: info.color ?? primaryColor,
+      value: info.ptsToQA?.toDouble() ?? 0,
+      radius: 20,
+    ));
+  }
+
+  chartData.sort((a, b) => b.value.compareTo(a.value));
+
+  chartData.add(
+    PieChartMetricData(
+      color: primaryColor.withOpacity(0.15),
+      value: max(41 - calcTotalVelocity(currentMetricList).toDouble(), 0),
+      radius: 5,
+    ),
+  );
+
+  return chartData;
 }

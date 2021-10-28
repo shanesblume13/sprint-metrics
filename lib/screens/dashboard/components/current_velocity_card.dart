@@ -24,7 +24,7 @@ class CurrentVelocityCard extends StatelessWidget {
       color: color,
       icon: icon,
       title: title,
-      progressPercentDisplay: '${calculatePercentToGoal().toStringAsFixed(0)}%',
+      progressLineDisplay: '${calculatePercentToGoal().toStringAsFixed(0)}%',
       progressLineCurrent: calculatePercentToGoal(),
       progressLineMax: 100,
       subTitle: '$velocity pts / $goal goal',

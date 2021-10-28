@@ -24,7 +24,7 @@ class CurrentFailRateCard extends StatelessWidget {
       color: color,
       icon: icon,
       title: title,
-      progressPercentDisplay: '${calculateFailRate().toStringAsFixed(0)}%',
+      progressLineDisplay: '${calculateFailRate().toStringAsFixed(0)}%',
       progressLineCurrent: calculateFailRate(),
       progressLineMax: goal,
       subTitle:

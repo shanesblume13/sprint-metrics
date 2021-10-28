@@ -1,141 +1,114 @@
 import 'dart:math';
+
+import 'package:admin/constants.dart';
 import 'package:admin/models/MetricInfo.dart';
+import 'package:admin/screens/dashboard/components/current_metric_pie_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import '../../../constants.dart';
 
 class CurrentFailRateChart extends StatelessWidget {
-  final List<MetricInfo> teamMetricInfoList;
+  final List<MetricInfo> currentMetricList;
 
   const CurrentFailRateChart({
     Key? key,
-    required this.teamMetricInfoList,
+    required this.currentMetricList,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: Stack(
-        children: [
-          PieChart(
-            PieChartData(
-              sectionsSpace: 0,
-              centerSpaceRadius: 70,
-              startDegreeOffset: -90,
-              sections: getPieChartSectionData(teamMetricInfoList),
-            ),
-          ),
-          Positioned.fill(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: defaultPadding),
-                Text(
-                  '${calcTotalFailRate(teamMetricInfoList).toStringAsFixed(0)}%',
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        height: 0.5,
-                      ),
-                ),
-                Text("of 10%")
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-List<PieChartSectionData> getPieChartSectionData(
-    List<MetricInfo> teamMetricInfoList) {
-  List<PieChartSectionData> pieChartSectionData = [];
-
-  double totalFailRate = calcTotalFailRate(teamMetricInfoList);
-  double remainingFailRate = max(10.0 - totalFailRate, 0);
-  double sumOfTeamFailRates = calcSumOfTeamFailRates(teamMetricInfoList);
-
-  for (var info in teamMetricInfoList) {
-    double teamValue =
-        calcTeamFailRateSectionValue(info, sumOfTeamFailRates, totalFailRate);
-
-    pieChartSectionData.add(
-      PieChartSectionData(
-        color: info.color,
-        value: teamValue,
-        showTitle: false,
-        radius: 20,
-      ),
+    return CurrentMetricPieChart(
+      title: '${calcTotalFailRate(currentMetricList).toStringAsFixed(0)}%',
+      subTitle: "of 10%",
+      pieChartData: getPieChartSectionData(currentMetricList),
     );
   }
 
-  pieChartSectionData.sort((a, b) => b.value.compareTo(a.value));
-
-  pieChartSectionData.add(
-    PieChartSectionData(
-      color: primaryColor.withOpacity(0.15),
-      value: remainingFailRate,
-      showTitle: false,
-      radius: 5,
-    ),
-  );
-
-  return pieChartSectionData;
-}
-
-double calcSumOfTeamFailRates(List<MetricInfo> teamMetricInfoList) {
-  double sumOfTeamFailRates = 0;
-
-  for (var info in teamMetricInfoList) {
+  double calcTotalFailRate(List<MetricInfo> demoTeamMetricInfo) {
+    int rejectionsPassedQA = 0;
+    int ptsPassedQA = 0;
     double failRate = 0;
 
-    if ((info.ptsPassedQA ?? 0) > 0) {
-      failRate = 100 *
-          ((info.rejectionsPassedQA ?? 0).toDouble() /
-              (info.ptsPassedQA ?? 0).toDouble());
+    for (var item in demoTeamMetricInfo) {
+      rejectionsPassedQA += item.rejectionsPassedQA ?? 0;
+      ptsPassedQA += item.ptsPassedQA ?? 0;
     }
 
-    sumOfTeamFailRates += failRate;
-  }
-  return sumOfTeamFailRates;
-}
+    if (ptsPassedQA == 0) {
+      failRate = 0;
+    } else {
+      failRate = 100 * (rejectionsPassedQA.toDouble() / ptsPassedQA.toDouble());
+    }
 
-double calcTeamFailRateSectionValue(
-    MetricInfo info, double sumOfTeamFailRates, double totalFailRate) {
-  double teamFailRate = 0;
-  double teamFailRateFractionOfTotalFailRate = 0;
-  double teamValue = 0;
-
-  if ((info.ptsPassedQA ?? 0) == 0) {
-    teamFailRate = 0;
-  } else {
-    teamFailRate = 100 *
-        ((info.rejectionsPassedQA ?? 0).toDouble() /
-            (info.ptsPassedQA ?? 100).toDouble());
+    return failRate;
   }
 
-  teamFailRateFractionOfTotalFailRate = (teamFailRate / sumOfTeamFailRates);
-  teamValue = totalFailRate * teamFailRateFractionOfTotalFailRate;
-  return teamValue;
-}
+  double calcSumOfTeamFailRates(List<MetricInfo> teamMetricInfoList) {
+    double sumOfTeamFailRates = 0;
 
-double calcTotalFailRate(List<MetricInfo> demoTeamMetricInfo) {
-  int rejectionsPassedQA = 0;
-  int ptsPassedQA = 0;
-  double failRate = 0;
+    for (var info in teamMetricInfoList) {
+      double failRate = 0;
 
-  for (var item in demoTeamMetricInfo) {
-    rejectionsPassedQA += item.rejectionsPassedQA ?? 0;
-    ptsPassedQA += item.ptsPassedQA ?? 0;
+      if ((info.ptsPassedQA ?? 0) > 0) {
+        failRate = 100 *
+            ((info.rejectionsPassedQA ?? 0).toDouble() /
+                (info.ptsPassedQA ?? 0).toDouble());
+      }
+
+      sumOfTeamFailRates += failRate;
+    }
+    return sumOfTeamFailRates;
   }
 
-  if (ptsPassedQA == 0) {
-    failRate = 0;
-  } else {
-    failRate = 100 * (rejectionsPassedQA.toDouble() / ptsPassedQA.toDouble());
+  double calcTeamFailRateSectionValue(
+      MetricInfo info, double sumOfTeamFailRates, double totalFailRate) {
+    double teamFailRate = 0;
+    double teamFailRateFractionOfTotalFailRate = 0;
+    double teamValue = 0;
+
+    if ((info.ptsPassedQA ?? 0) == 0) {
+      teamFailRate = 0;
+    } else {
+      teamFailRate = 100 *
+          ((info.rejectionsPassedQA ?? 0).toDouble() /
+              (info.ptsPassedQA ?? 100).toDouble());
+    }
+
+    teamFailRateFractionOfTotalFailRate = (teamFailRate / sumOfTeamFailRates);
+    teamValue = totalFailRate * teamFailRateFractionOfTotalFailRate;
+    return teamValue;
   }
 
-  return failRate;
+  List<PieChartMetricData> getPieChartSectionData(
+      List<MetricInfo> currentMetricList) {
+    List<PieChartMetricData> chartData = [];
+
+    double totalFailRate = calcTotalFailRate(currentMetricList);
+    double remainingFailRate = max(10.0 - totalFailRate, 0);
+    double sumOfTeamFailRates = calcSumOfTeamFailRates(currentMetricList);
+
+    for (var info in currentMetricList) {
+      double teamValue =
+          calcTeamFailRateSectionValue(info, sumOfTeamFailRates, totalFailRate);
+
+      chartData.add(
+        PieChartMetricData(
+          color: info.color ?? primaryColor,
+          value: teamValue,
+          radius: 20,
+        ),
+      );
+    }
+
+    chartData.sort((a, b) => b.value.compareTo(a.value));
+
+    chartData.add(
+      PieChartMetricData(
+        color: primaryColor.withOpacity(0.15),
+        value: remainingFailRate,
+        radius: 5,
+      ),
+    );
+
+    return chartData;
+  }
 }

@@ -37,7 +37,7 @@ class CurrentVelocity extends StatelessWidget {
           ),
           SizedBox(height: defaultPadding),
           CurrentVelocityChart(
-            teamVelocityInfoList: demoTeamVelocityInfo,
+            currentMetricList: demoTeamVelocityInfo,
           ),
           Column(
             children: getCurrentVelocityCards(sortedList),

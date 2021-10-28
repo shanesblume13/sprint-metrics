@@ -41,7 +41,7 @@ class CurrentFailRate extends StatelessWidget {
           ),
           SizedBox(height: defaultPadding),
           CurrentFailRateChart(
-            teamMetricInfoList: demoCurrentMetrics,
+            currentMetricList: demoCurrentMetrics,
           ),
           Column(
             children: getCurrentFailRateCards(sortedList),

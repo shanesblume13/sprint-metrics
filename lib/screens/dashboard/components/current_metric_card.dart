@@ -7,7 +7,7 @@ class CurrentMetricCard extends StatelessWidget {
     required this.color,
     required this.icon,
     required this.title,
-    required this.progressPercentDisplay,
+    required this.progressLineDisplay,
     required this.progressLineCurrent,
     required this.progressLineMax,
     required this.subTitle,
@@ -16,7 +16,7 @@ class CurrentMetricCard extends StatelessWidget {
   final Color color;
   final IconData icon;
   final String title;
-  final String progressPercentDisplay;
+  final String progressLineDisplay;
   final double progressLineCurrent;
   final double progressLineMax;
   final String subTitle;
@@ -79,7 +79,7 @@ class CurrentMetricCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  progressPercentDisplay,
+                  progressLineDisplay,
                 ),
               ],
             ),
