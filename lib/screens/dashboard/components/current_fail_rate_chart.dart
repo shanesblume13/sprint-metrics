@@ -4,10 +4,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
-class WeeklyFailRateChart extends StatelessWidget {
+class CurrentFailRateChart extends StatelessWidget {
   final List<MetricInfo> teamMetricInfoList;
 
-  const WeeklyFailRateChart({
+  const CurrentFailRateChart({
     Key? key,
     required this.teamMetricInfoList,
   }) : super(key: key);
@@ -139,4 +139,3 @@ double calcTotalFailRate(List<MetricInfo> demoTeamMetricInfo) {
 
   return failRate;
 }
-

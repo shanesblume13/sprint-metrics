@@ -1,11 +1,12 @@
+import 'package:admin/models/MetricInfo.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:admin/models/MetricInfo.dart';
+
 import '../../../constants.dart';
 import 'current_velocity_alt_card.dart';
 
-class MyFiles extends StatelessWidget {
-  const MyFiles({
+class CurrentVelocityAlt extends StatelessWidget {
+  const CurrentVelocityAlt({
     Key? key,
   }) : super(key: key);
 
@@ -18,7 +19,7 @@ class MyFiles extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "My Files",
+              "Current Velocity",
               style: Theme.of(context).textTheme.subtitle1,
             ),
             ElevatedButton.icon(
@@ -37,12 +38,12 @@ class MyFiles extends StatelessWidget {
         ),
         SizedBox(height: defaultPadding),
         Responsive(
-          mobile: FileInfoCardGridView(
+          mobile: CurrentVelocityAltCardGridView(
             crossAxisCount: _size.width < 650 ? 2 : 4,
-            childAspectRatio: _size.width < 650 ? 1.3 : 1,
+            childAspectRatio: _size.width < 650 && _size.width > 350 ? 1.3 : 1,
           ),
-          tablet: FileInfoCardGridView(),
-          desktop: FileInfoCardGridView(
+          tablet: CurrentVelocityAltCardGridView(),
+          desktop: CurrentVelocityAltCardGridView(
             childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
           ),
         ),
@@ -51,8 +52,8 @@ class MyFiles extends StatelessWidget {
   }
 }
 
-class FileInfoCardGridView extends StatelessWidget {
-  const FileInfoCardGridView({
+class CurrentVelocityAltCardGridView extends StatelessWidget {
+  const CurrentVelocityAltCardGridView({
     Key? key,
     this.crossAxisCount = 4,
     this.childAspectRatio = 1,

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
-class WeeklyVelocityChart extends StatelessWidget {
+class CurrentVelocityChart extends StatelessWidget {
   final List<MetricInfo> teamVelocityInfoList;
 
-  const WeeklyVelocityChart({
+  const CurrentVelocityChart({
     Key? key,
     required this.teamVelocityInfoList,
   }) : super(key: key);

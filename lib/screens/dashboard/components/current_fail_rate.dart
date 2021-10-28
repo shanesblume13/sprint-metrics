@@ -1,11 +1,11 @@
 import 'package:admin/models/MetricInfo.dart';
-import 'package:admin/screens/dashboard/components/weekly_fail_rate_card.dart';
-import 'package:admin/screens/dashboard/components/weekly_fail_rate_chart.dart';
+import 'package:admin/screens/dashboard/components/current_fail_rate_card.dart';
+import 'package:admin/screens/dashboard/components/current_fail_rate_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
-class WeeklyFailRate extends StatelessWidget {
-  const WeeklyFailRate({
+class CurrentFailRate extends StatelessWidget {
+  const CurrentFailRate({
     Key? key,
   }) : super(key: key);
 
@@ -33,30 +33,31 @@ class WeeklyFailRate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Weekly Fail Rate",
+            "Current Fail Rate",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
           SizedBox(height: defaultPadding),
-          WeeklyFailRateChart(
+          CurrentFailRateChart(
             teamMetricInfoList: demoCurrentMetrics,
           ),
           Column(
-            children: getWeeklyFailRateCards(sortedList),
+            children: getCurrentFailRateCards(sortedList),
           ),
         ],
       ),
     );
   }
 
-  List<WeeklyFailRateCard> getWeeklyFailRateCards(List<MetricInfo> sortedList) {
-    List<WeeklyFailRateCard> failRateCardList = [];
+  List<CurrentFailRateCard> getCurrentFailRateCards(
+      List<MetricInfo> sortedList) {
+    List<CurrentFailRateCard> failRateCardList = [];
 
     for (var item in sortedList) {
       failRateCardList.add(
-        WeeklyFailRateCard(
+        CurrentFailRateCard(
           icon: item.icon ?? Icons.broken_image,
           title: item.title ?? "",
           goal: item.failRateGoal ?? 10,

@@ -1,9 +1,9 @@
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/weekly_fail_rate.dart';
+import 'package:admin/screens/dashboard/components/current_fail_rate.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import 'components/header.dart';
-import 'components/weekly_velocity.dart';
+import 'components/current_velocity.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -22,15 +22,15 @@ class DashboardScreen extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: [
-                      //CurrentVelocity(),
+                      //CurrentVelocityAlt(),
                       //SizedBox(height: defaultPadding),
                       //RecentFiles(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) WeeklyVelocity(),
+                      if (Responsive.isMobile(context)) CurrentVelocity(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) WeeklyFailRate(),
+                      if (Responsive.isMobile(context)) CurrentFailRate(),
                     ],
                   ),
                 ),
@@ -40,14 +40,14 @@ class DashboardScreen extends StatelessWidget {
                 if (!Responsive.isMobile(context))
                   Expanded(
                     flex: 2,
-                    child: WeeklyVelocity(),
+                    child: CurrentVelocity(),
                   ),
                 if (!Responsive.isMobile(context))
                   SizedBox(width: defaultPadding),
                 if (!Responsive.isMobile(context))
                   Expanded(
                     flex: 2,
-                    child: WeeklyFailRate(),
+                    child: CurrentFailRate(),
                   ),
               ],
             )

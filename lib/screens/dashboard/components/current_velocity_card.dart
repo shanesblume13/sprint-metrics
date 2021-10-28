@@ -1,4 +1,3 @@
-import 'package:admin/models/MetricInfo.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -6,81 +5,77 @@ import '../../../constants.dart';
 class CurrentVelocityCard extends StatelessWidget {
   const CurrentVelocityCard({
     Key? key,
-    required this.info,
+    required this.title,
+    required this.icon,
+    required this.goal,
+    required this.velocity,
+    required this.color,
   }) : super(key: key);
 
-  final MetricInfo info;
+  final String title;
+  final int goal, velocity;
+  final IconData icon;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: defaultPadding),
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        border: Border.all(width: 2, color: primaryColor.withOpacity(0.15)),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(defaultPadding),
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.all(defaultPadding * 0.75),
-                decoration: BoxDecoration(
-                  color: info.color!.withOpacity(0.1),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Icon(
-                  info.icon,
-                  color: info.color,
-                ),
-                // child: SvgPicture.asset(
-                //   info.iconData!,
-                //   color: info.color,
-                // ),
-              ),
-              Icon(Icons.more_vert, color: Colors.white54)
-            ],
+          SizedBox(
+            height: 20,
+            width: 20,
+            child: Icon(
+              icon,
+              color: color,
+            ),
           ),
-          Text(
-            info.title!,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          ProgressLine(
-            color: info.color,
-            percentage: infoToProgressPercent(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${info.ptsToQA} / ${info.velocityGoal}',
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    "$velocity pts / $goal goal",
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption!
+                        .copyWith(color: Colors.white70),
+                  ),
+                  ProgressLine(
+                    color: color,
+                    percentage: calculatePercentage(),
+                  ),
+                ],
               ),
-              Text(
-                "${infoToProgressPercent().toStringAsFixed(0)}%",
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(color: Colors.white70),
-              ),
-            ],
-          )
+            ),
+          ),
+          Text('${calculatePercentage().toStringAsFixed(0)}%')
         ],
       ),
     );
   }
 
-  double infoToProgressPercent() =>
-      100 *
-      (info.ptsToQA?.toDouble() ?? 0) /
-      (info.velocityGoal?.toDouble() ?? 100);
+  double calculatePercentage() {
+    if (goal == 0) {
+      return 100;
+    }
+    return 100 * (velocity / goal);
+  }
 }
 
 class ProgressLine extends StatelessWidget {

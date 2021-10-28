@@ -1,8 +1,8 @@
 import 'package:admin/models/MetricInfo.dart';
-import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import 'current_velocity_chart.dart';
 import 'current_velocity_card.dart';
 
 class CurrentVelocity extends StatelessWidget {
@@ -12,70 +12,59 @@ class CurrentVelocity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Current Velocity",
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 1.5,
-                  vertical:
-                      defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-                ),
-              ),
-              onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
-            ),
-          ],
-        ),
-        SizedBox(height: defaultPadding),
-        Responsive(
-          mobile: CurrentVelocityCardGridView(
-            crossAxisCount: _size.width < 650 ? 2 : 4,
-            childAspectRatio: _size.width < 650 && _size.width > 350 ? 1.3 : 1,
-          ),
-          tablet: CurrentVelocityCardGridView(),
-          desktop: CurrentVelocityCardGridView(
-            childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
-          ),
-        ),
-      ],
-    );
-  }
-}
+    var sortedList = demoTeamVelocityInfo;
+    sortedList.sort((a, b) {
+      if (b.velocityGoal == 0) return 0;
+      return ((b.ptsToQA ?? 0) / (b.velocityGoal ?? 100))
+          .compareTo((a.ptsToQA ?? 0) / (a.velocityGoal ?? 100));
+    });
 
-class CurrentVelocityCardGridView extends StatelessWidget {
-  const CurrentVelocityCardGridView({
-    Key? key,
-    this.crossAxisCount = 4,
-    this.childAspectRatio = 1,
-  }) : super(key: key);
-
-  final int crossAxisCount;
-  final double childAspectRatio;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: demoCurrentMetrics.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        crossAxisSpacing: defaultPadding,
-        mainAxisSpacing: defaultPadding,
-        childAspectRatio: childAspectRatio,
+    return Container(
+      padding: EdgeInsets.all(defaultPadding),
+      decoration: BoxDecoration(
+        color: secondaryColor,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
-      itemBuilder: (context, index) =>
-          CurrentVelocityCard(info: demoCurrentMetrics[index]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Current Velocity",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: defaultPadding),
+          CurrentVelocityChart(
+            teamVelocityInfoList: demoTeamVelocityInfo,
+          ),
+          Column(
+            children: getCurrentVelocityCards(sortedList),
+          ),
+        ],
+      ),
     );
   }
+
+  List<CurrentVelocityCard> getCurrentVelocityCards(
+      List<MetricInfo> sortedList) {
+    List<CurrentVelocityCard> test = [];
+
+    for (var item in sortedList) {
+      test.add(
+        CurrentVelocityCard(
+          icon: item.icon ?? Icons.broken_image,
+          title: item.title ?? "",
+          goal: item.velocityGoal ?? 0,
+          velocity: item.ptsToQA ?? 0,
+          color: item.color ?? Colors.white,
+        ),
+      );
+    }
+
+    return test;
+  }
 }
+
+List<MetricInfo> demoTeamVelocityInfo = demoCurrentMetrics;
