@@ -11,9 +11,17 @@ class WeeklyFailRate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sortedList = demoTeamMetricInfo;
-    sortedList.sort((a, b) => ((b.velocity ?? 0) / (b.goal ?? 100))
-        .compareTo((a.velocity ?? 0) / (a.goal ?? 100)));
+    var sortedList = demoCurrentMetrics;
+    sortedList.sort((a, b) {
+      if ((b.ptsPassedQA ?? 0) == 0) {
+        return 0;
+      } else if ((a.ptsPassedQA ?? 0) == 0) {
+        return 1;
+      } else {
+        return ((b.rejectionsPassedQA ?? 0) / (b.ptsPassedQA ?? 0))
+            .compareTo((a.rejectionsPassedQA ?? 0) / (a.ptsPassedQA ?? 0));
+      }
+    });
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -33,7 +41,7 @@ class WeeklyFailRate extends StatelessWidget {
           ),
           SizedBox(height: defaultPadding),
           WeeklyFailRateChart(
-            teamMetricInfoList: demoTeamMetricInfo,
+            teamMetricInfoList: demoCurrentMetrics,
           ),
           Column(
             children: getWeeklyFailRateCards(sortedList),
@@ -44,79 +52,21 @@ class WeeklyFailRate extends StatelessWidget {
   }
 
   List<WeeklyFailRateCard> getWeeklyFailRateCards(List<MetricInfo> sortedList) {
-    List<WeeklyFailRateCard> test = [];
+    List<WeeklyFailRateCard> failRateCardList = [];
 
     for (var item in sortedList) {
-      test.add(
+      failRateCardList.add(
         WeeklyFailRateCard(
           icon: item.icon ?? Icons.broken_image,
           title: item.title ?? "",
-          goal: item.goal ?? 0,
-          velocity: item.velocity ?? 0,
+          goal: item.failRateGoal ?? 10,
+          rejectionsPassedQA: item.rejectionsPassedQA ?? 0,
+          ptsPassedQA: item.ptsPassedQA ?? 0,
           color: item.color ?? Colors.white,
         ),
       );
     }
 
-    return test;
+    return failRateCardList;
   }
 }
-
-List<MetricInfo> demoTeamMetricInfo = [
-  MetricInfo(
-    title: "Mobile",
-    velocity: 1,
-    icon: Icons.phone_android,
-    goal: 3,
-    color: Colors.yellow,
-  ),
-  MetricInfo(
-    title: "Core Services",
-    velocity: 12,
-    icon: Icons.speed,
-    goal: 15,
-    color: Colors.red,
-  ),
-  MetricInfo(
-    title: "Enhancement",
-    velocity: 7,
-    icon: Icons.new_releases,
-    goal: 10,
-    color: Colors.blue,
-  ),
-  MetricInfo(
-    title: "Front End",
-    velocity: 3,
-    icon: Icons.code,
-    goal: 15,
-    color: Colors.purple,
-  ),
-  MetricInfo(
-    title: "EC",
-    velocity: 8,
-    icon: Icons.map,
-    goal: 15,
-    color: Colors.orange,
-  ),
-  MetricInfo(
-    title: "New Dev",
-    velocity: 2,
-    icon: Icons.science,
-    goal: 15,
-    color: Colors.green,
-  ),
-  MetricInfo(
-    title: "Design",
-    velocity: 2,
-    icon: Icons.design_services,
-    goal: 15,
-    color: Colors.pink,
-  ),
-  MetricInfo(
-    title: "No Team",
-    velocity: 2,
-    icon: Icons.person,
-    goal: 15,
-    color: Colors.white,
-  ),
-];

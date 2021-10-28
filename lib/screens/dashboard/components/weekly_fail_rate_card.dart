@@ -8,12 +8,14 @@ class WeeklyFailRateCard extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.goal,
-    required this.velocity,
+    required this.rejectionsPassedQA,
+    required this.ptsPassedQA,
     required this.color,
   }) : super(key: key);
 
   final String title;
-  final int goal, velocity;
+  final int rejectionsPassedQA, ptsPassedQA;
+  final double goal;
   final IconData icon;
   final Color color;
 
@@ -50,7 +52,7 @@ class WeeklyFailRateCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "$velocity / $goal",
+                    "$rejectionsPassedQA rej / $ptsPassedQA pts / ${goal.toStringAsFixed(0)}% goal",
                     style: Theme.of(context)
                         .textTheme
                         .caption!
@@ -59,19 +61,26 @@ class WeeklyFailRateCard extends StatelessWidget {
                   ProgressLine(
                     color: color,
                     percentage: calculatePercentage(),
+                    goal: goal,
                   ),
                 ],
               ),
             ),
           ),
-          Text('${calculatePercentage().toStringAsFixed(0)}%')
+          Text(
+            '${calculatePercentage().toStringAsFixed(0)}%',
+          ),
         ],
       ),
     );
   }
 
   double calculatePercentage() {
-    return 100 * (velocity / goal);
+    if (ptsPassedQA == 0) {
+      return 0;
+    } else {
+      return 100 * (rejectionsPassedQA / ptsPassedQA);
+    }
   }
 }
 
@@ -80,13 +89,21 @@ class ProgressLine extends StatelessWidget {
     Key? key,
     this.color = primaryColor,
     required this.percentage,
+    required this.goal,
   }) : super(key: key);
 
   final Color? color;
   final double? percentage;
+  final double? goal;
 
   @override
   Widget build(BuildContext context) {
+    double constraintPercentage = 0;
+
+    if ((percentage ?? 0) > 0) {
+      constraintPercentage = 100 * ((percentage ?? 0) / (goal ?? 100));
+    }
+
     return Stack(
       children: [
         Container(
@@ -99,7 +116,7 @@ class ProgressLine extends StatelessWidget {
         ),
         LayoutBuilder(
           builder: (context, constraints) => Container(
-            width: constraints.maxWidth * (percentage! / 100),
+            width: constraints.maxWidth * (constraintPercentage / 100),
             height: 5,
             decoration: BoxDecoration(
               color: color,

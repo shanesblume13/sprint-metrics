@@ -58,7 +58,7 @@ List<PieChartSectionData> getPieChartSectionData(
     pieChartSectionData.add(
       PieChartSectionData(
         color: info.color,
-        value: info.velocity?.toDouble() ?? 0,
+        value: info.ptsToQA?.toDouble() ?? 0,
         showTitle: false,
         radius: 20,
       ),
@@ -83,7 +83,7 @@ int calcTotalVelocity(List<MetricInfo> demoTeamVelocityInfo) {
   int totalVelocity = 0;
 
   for (var item in demoTeamVelocityInfo) {
-    totalVelocity += item.velocity ?? 0;
+    totalVelocity += item.ptsToQA ?? 0;
   }
 
   return totalVelocity;

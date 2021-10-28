@@ -50,7 +50,7 @@ class WeeklyVelocityCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "$velocity / $goal",
+                    "$velocity pts / $goal goal",
                     style: Theme.of(context)
                         .textTheme
                         .caption!

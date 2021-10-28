@@ -57,7 +57,7 @@ class CurrentVelocityCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${info.velocity} / ${info.goal}',
+                '${info.ptsToQA} / ${info.velocityGoal}',
                 style: Theme.of(context)
                     .textTheme
                     .caption!
@@ -78,7 +78,9 @@ class CurrentVelocityCard extends StatelessWidget {
   }
 
   double infoToProgressPercent() =>
-      100 * (info.velocity?.toDouble() ?? 0) / (info.goal?.toDouble() ?? 100);
+      100 *
+      (info.ptsToQA?.toDouble() ?? 0) /
+      (info.velocityGoal?.toDouble() ?? 100);
 }
 
 class ProgressLine extends StatelessWidget {

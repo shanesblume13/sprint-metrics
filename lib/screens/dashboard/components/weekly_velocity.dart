@@ -13,8 +13,8 @@ class WeeklyVelocity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var sortedList = demoTeamVelocityInfo;
-    sortedList.sort((a, b) => ((b.velocity ?? 0) / (b.goal ?? 100))
-        .compareTo((a.velocity ?? 0) / (a.goal ?? 100)));
+    sortedList.sort((a, b) => ((b.ptsToQA ?? 0) / (b.velocityGoal ?? 100))
+        .compareTo((a.ptsToQA ?? 0) / (a.velocityGoal ?? 100)));
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -52,8 +52,8 @@ class WeeklyVelocity extends StatelessWidget {
         WeeklyVelocityCard(
           icon: item.icon ?? Icons.broken_image,
           title: item.title ?? "",
-          goal: item.goal ?? 0,
-          velocity: item.velocity ?? 0,
+          goal: item.velocityGoal ?? 0,
+          velocity: item.ptsToQA ?? 0,
           color: item.color ?? Colors.white,
         ),
       );
@@ -66,58 +66,58 @@ class WeeklyVelocity extends StatelessWidget {
 List<MetricInfo> demoTeamVelocityInfo = [
   MetricInfo(
     title: "Mobile",
-    velocity: 1,
+    ptsToQA: 1,
     icon: Icons.phone_android,
-    goal: 3,
+    velocityGoal: 3,
     color: Colors.yellow,
   ),
   MetricInfo(
     title: "Core Services",
-    velocity: 12,
+    ptsToQA: 12,
     icon: Icons.speed,
-    goal: 15,
+    velocityGoal: 15,
     color: Colors.red,
   ),
   MetricInfo(
     title: "Enhancement",
-    velocity: 7,
+    ptsToQA: 7,
     icon: Icons.new_releases,
-    goal: 10,
+    velocityGoal: 10,
     color: Colors.blue,
   ),
   MetricInfo(
     title: "Front End",
-    velocity: 3,
+    ptsToQA: 3,
     icon: Icons.code,
-    goal: 15,
+    velocityGoal: 15,
     color: Colors.purple,
   ),
   MetricInfo(
     title: "EC",
-    velocity: 8,
+    ptsToQA: 8,
     icon: Icons.map,
-    goal: 15,
+    velocityGoal: 15,
     color: Colors.orange,
   ),
   MetricInfo(
     title: "New Dev",
-    velocity: 2,
+    ptsToQA: 2,
     icon: Icons.science,
-    goal: 15,
+    velocityGoal: 15,
     color: Colors.green,
   ),
   MetricInfo(
     title: "Design",
-    velocity: 2,
+    ptsToQA: 2,
     icon: Icons.design_services,
-    goal: 15,
+    velocityGoal: 15,
     color: Colors.pink,
   ),
   MetricInfo(
     title: "No Team",
-    velocity: 2,
+    ptsToQA: 2,
     icon: Icons.person,
-    goal: 15,
+    velocityGoal: 15,
     color: Colors.white,
   ),
 ];

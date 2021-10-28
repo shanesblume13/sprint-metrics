@@ -2,74 +2,102 @@ import 'package:flutter/material.dart';
 
 class MetricInfo {
   final String? title;
-  final int? velocity, goal;
   final IconData? icon;
   final Color? color;
+  final int? ptsToQA, ptsPassedQA, rejectionsPassedQA, velocityGoal;
+  final double? failRateGoal;
 
   MetricInfo({
     this.title,
-    this.goal,
-    this.velocity,
     this.icon,
     this.color,
+    this.ptsToQA,
+    this.ptsPassedQA,
+    this.rejectionsPassedQA,
+    this.velocityGoal,
+    this.failRateGoal,
   });
 }
 
-List demoCurrentMetrics = [
+List<MetricInfo> demoCurrentMetrics = [
   MetricInfo(
     title: "Mobile",
-    velocity: 5,
     icon: Icons.mobile_screen_share,
-    goal: 3,
     color: Colors.yellow,
+    ptsToQA: 5,
+    ptsPassedQA: 3,
+    rejectionsPassedQA: 1,
+    velocityGoal: 3,
+    failRateGoal: 10,
   ),
   MetricInfo(
     title: "Core Services",
-    velocity: 6,
     icon: Icons.speed,
-    goal: 5,
     color: Colors.red,
+    ptsToQA: 5,
+    ptsPassedQA: 9,
+    rejectionsPassedQA: 2,
+    velocityGoal: 0,
+    failRateGoal: 10,
   ),
   MetricInfo(
     title: "Enhancement",
-    velocity: 7,
-    icon: Icons.upgrade,
-    goal: 10,
+    icon: Icons.new_releases,
     color: Colors.blue,
+    ptsToQA: 5,
+    ptsPassedQA: 4,
+    rejectionsPassedQA: 0,
+    velocityGoal: 3,
+    failRateGoal: 10,
   ),
   MetricInfo(
     title: "Front End",
-    velocity: 8,
     icon: Icons.code,
-    goal: 15,
     color: Colors.purple,
+    ptsToQA: 5,
+    ptsPassedQA: 12,
+    rejectionsPassedQA: 1,
+    velocityGoal: 3,
+    failRateGoal: 10,
   ),
   MetricInfo(
     title: "EC",
-    velocity: 8,
     icon: Icons.map,
-    goal: 15,
     color: Colors.orange,
+    ptsToQA: 5,
+    ptsPassedQA: 12,
+    rejectionsPassedQA: 6,
+    velocityGoal: 3,
+    failRateGoal: 15,
   ),
   MetricInfo(
     title: "New Dev",
-    velocity: 8,
-    icon: Icons.new_releases,
-    goal: 15,
+    icon: Icons.science,
     color: Colors.green,
+    ptsToQA: 5,
+    ptsPassedQA: 0,
+    rejectionsPassedQA: 0,
+    velocityGoal: 3,
+    failRateGoal: 10,
   ),
   MetricInfo(
     title: "Design",
-    velocity: 8,
     icon: Icons.design_services,
-    goal: 15,
     color: Colors.pink,
+    ptsToQA: 5,
+    ptsPassedQA: 0,
+    rejectionsPassedQA: 0,
+    velocityGoal: 3,
+    failRateGoal: 10,
   ),
   MetricInfo(
     title: "No Team",
-    velocity: 8,
     icon: Icons.person,
-    goal: 15,
-    color: Colors.grey,
+    color: Colors.white,
+    ptsToQA: 5,
+    ptsPassedQA: 0,
+    rejectionsPassedQA: 0,
+    velocityGoal: 3,
+    failRateGoal: 10,
   ),
 ];
