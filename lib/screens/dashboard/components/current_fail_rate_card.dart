@@ -23,54 +23,66 @@ class CurrentFailRateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: defaultPadding),
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        border: Border.all(width: 2, color: primaryColor.withOpacity(0.15)),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(defaultPadding),
-        ),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            height: 20,
-            width: 20,
-            child: Icon(
-              icon,
-              color: color,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    "$rejectionsPassedQA rej / $ptsPassedQA pts / ${goal.toStringAsFixed(0)}% goal",
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption!
-                        .copyWith(color: Colors.white70),
-                  ),
-                  ProgressLine(
-                    color: color,
-                    percentage: calculatePercentage(),
-                    goal: goal,
-                  ),
-                ],
+      child: Material(
+        child: InkWell(
+          onTap: () {
+            print('Tap detected');
+          },
+          splashColor: color,
+          child: Container(
+            padding: EdgeInsets.all(defaultPadding),
+            decoration: BoxDecoration(
+              border:
+                  Border.all(width: 2, color: primaryColor.withOpacity(0.2)),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(defaultPadding),
               ),
             ),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: Icon(
+                    icon,
+                    color: color,
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          "$rejectionsPassedQA rej / $ptsPassedQA pts / ${goal.toStringAsFixed(0)}% goal",
+                          style: Theme.of(context)
+                              .textTheme
+                              .caption!
+                              .copyWith(color: Colors.white70),
+                        ),
+                        ProgressLine(
+                          color: color,
+                          percentage: calculatePercentage(),
+                          goal: goal,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Text(
+                  '${calculatePercentage().toStringAsFixed(0)}%',
+                ),
+              ],
+            ),
           ),
-          Text(
-            '${calculatePercentage().toStringAsFixed(0)}%',
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -110,7 +122,7 @@ class ProgressLine extends StatelessWidget {
           width: double.infinity,
           height: 5,
           decoration: BoxDecoration(
-            color: color!.withOpacity(0.1),
+            color: primaryColor.withOpacity(0.1),
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
