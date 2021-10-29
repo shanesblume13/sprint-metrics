@@ -14,7 +14,7 @@ class CurrentFailRateCard extends StatelessWidget {
 
   final String title;
   final int rejectionsPassedQA, ptsPassedQA;
-  final double goal;
+  final int goal;
   final IconData icon;
   final Color color;
 
@@ -26,7 +26,7 @@ class CurrentFailRateCard extends StatelessWidget {
       title: title,
       progressLineDisplay: '${calculateFailRate().toStringAsFixed(0)}%',
       progressLineCurrent: calculateFailRate(),
-      progressLineMax: goal,
+      progressLineMax: goal.toDouble(),
       subTitle:
           "$rejectionsPassedQA rej / $ptsPassedQA pts / ${calculateFailRate().toStringAsFixed(0)}% goal",
     );

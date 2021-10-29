@@ -29,7 +29,7 @@ class CurrentVelocityAltCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(defaultPadding * 0.75),
                 decoration: BoxDecoration(
-                  color: info.color!.withOpacity(0.1),
+                  color: info.color.withOpacity(0.1),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Icon(
@@ -45,7 +45,7 @@ class CurrentVelocityAltCard extends StatelessWidget {
             ],
           ),
           Text(
-            info.title!,
+            info.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -78,9 +78,7 @@ class CurrentVelocityAltCard extends StatelessWidget {
   }
 
   double infoToProgressPercent() =>
-      100 *
-      (info.ptsToQA?.toDouble() ?? 0) /
-      (info.velocityGoal?.toDouble() ?? 100);
+      100 * (info.ptsToQA.toDouble()) / (info.velocityGoal.toDouble());
 }
 
 class ProgressLine extends StatelessWidget {

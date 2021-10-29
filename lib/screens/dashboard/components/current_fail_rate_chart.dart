@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:admin/constants.dart';
 import 'package:admin/models/MetricInfo.dart';
 import 'package:admin/screens/dashboard/components/current_metric_pie_chart.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class CurrentFailRateChart extends StatelessWidget {
@@ -29,8 +28,8 @@ class CurrentFailRateChart extends StatelessWidget {
     double failRate = 0;
 
     for (var item in demoTeamMetricInfo) {
-      rejectionsPassedQA += item.rejectionsPassedQA ?? 0;
-      ptsPassedQA += item.ptsPassedQA ?? 0;
+      rejectionsPassedQA += item.rejectionsPassedQA;
+      ptsPassedQA += item.ptsPassedQA;
     }
 
     if (ptsPassedQA == 0) {
@@ -48,10 +47,10 @@ class CurrentFailRateChart extends StatelessWidget {
     for (var info in teamMetricInfoList) {
       double failRate = 0;
 
-      if ((info.ptsPassedQA ?? 0) > 0) {
+      if ((info.ptsPassedQA) > 0) {
         failRate = 100 *
-            ((info.rejectionsPassedQA ?? 0).toDouble() /
-                (info.ptsPassedQA ?? 0).toDouble());
+            ((info.rejectionsPassedQA).toDouble() /
+                (info.ptsPassedQA).toDouble());
       }
 
       sumOfTeamFailRates += failRate;
@@ -65,12 +64,12 @@ class CurrentFailRateChart extends StatelessWidget {
     double teamFailRateFractionOfTotalFailRate = 0;
     double teamValue = 0;
 
-    if ((info.ptsPassedQA ?? 0) == 0) {
+    if ((info.ptsPassedQA) == 0) {
       teamFailRate = 0;
     } else {
       teamFailRate = 100 *
-          ((info.rejectionsPassedQA ?? 0).toDouble() /
-              (info.ptsPassedQA ?? 100).toDouble());
+          ((info.rejectionsPassedQA).toDouble() /
+              (info.ptsPassedQA).toDouble());
     }
 
     teamFailRateFractionOfTotalFailRate = (teamFailRate / sumOfTeamFailRates);
@@ -92,7 +91,7 @@ class CurrentFailRateChart extends StatelessWidget {
 
       chartData.add(
         PieChartMetricData(
-          color: info.color ?? primaryColor,
+          color: info.color,
           value: teamValue,
           radius: 20,
         ),

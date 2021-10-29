@@ -1,40 +1,55 @@
+import 'package:admin/models/MetricInfo.dart';
 import 'package:admin/screens/dashboard/components/current_metric_card.dart';
 import 'package:flutter/material.dart';
-
-import '../../../constants.dart';
 
 class CurrentVelocityCard extends StatelessWidget {
   const CurrentVelocityCard({
     Key? key,
-    required this.title,
-    required this.icon,
-    required this.goal,
-    required this.velocity,
-    required this.color,
+    required this.metricInfo,
   }) : super(key: key);
 
-  final String title;
-  final int goal, velocity;
-  final IconData icon;
-  final Color color;
+  final MetricInfo metricInfo;
 
   @override
   Widget build(BuildContext context) {
     return CurrentMetricCard(
-      color: color,
-      icon: icon,
-      title: title,
+      color: metricInfo.color,
+      icon: metricInfo.icon,
+      title: metricInfo.title,
       progressLineDisplay: '${calculatePercentToGoal().toStringAsFixed(0)}%',
       progressLineCurrent: calculatePercentToGoal(),
       progressLineMax: 100,
-      subTitle: '$velocity pts / $goal goal',
+      subTitle: '${metricInfo.ptsToQA} pts / ${metricInfo.velocityGoal} goal',
     );
   }
 
+  int calcTotalVelocity(List<MetricInfo> metricInfos) {
+    int totalVelocity = 0;
+
+    for (var item in metricInfos) {
+      totalVelocity += item.ptsToQA;
+    }
+
+    return totalVelocity;
+  }
+
   double calculatePercentToGoal() {
-    if (goal == 0) {
+    if ((metricInfo.velocityGoal) == 0) {
       return 100;
     }
-    return 100 * (velocity / goal);
+    return 100 * ((metricInfo.ptsToQA) / (metricInfo.velocityGoal).toDouble());
   }
+}
+
+List<CurrentVelocityCard> getCurrentVelocityCards(
+    List<MetricInfo> metricInfos) {
+  List<CurrentVelocityCard> cards = [];
+
+  for (var metricInfo in metricInfos) {
+    cards.add(
+      CurrentVelocityCard(metricInfo: metricInfo),
+    );
+  }
+
+  return cards;
 }

@@ -8,6 +8,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "atlassian_apis",
+      "rootUri": "file:///Users/shane.blume/.pub-cache/hosted/pub.dartlang.org/atlassian_apis-0.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/shane.blume/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0",
       "packageUri": "lib/",
@@ -302,7 +308,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-10-28T17:21:57.703411Z",
+  "generated": "2021-10-28T22:39:42.237520Z",
   "generator": "pub",
   "generatorVersion": "2.14.4"
 }
