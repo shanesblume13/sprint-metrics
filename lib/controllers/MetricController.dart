@@ -5,7 +5,7 @@ import 'package:admin/models/Team.dart';
 
 class MetricController {
   Future<List<MetricInfo>> getWeeklyTeamVelocityMetrics(int weeksAgo) async {
-    List<Case> cases = await fetchCasesByWeek(weeksAgo);
+    List<Case> cases = await fetchVelocityCasesByWeek(weeksAgo);
     List<MetricInfo> metricInfos = [];
     List<Team> teams = demoITTeam.teams ?? [];
     List<DeveloperTeam> developerTeams = [];
@@ -29,6 +29,47 @@ class MetricController {
     sortMetricInfosByVelocityToGoal(metricInfos);
 
     return metricInfos;
+  }
+
+  Future<List<MetricInfo>> getWeeklyTeamFailRateMetrics(int weeksAgo) async {
+    List<Case> cases = await fetchFailRateCasesByWeek(weeksAgo);
+    List<MetricInfo> metricInfos = [];
+    List<Team> teams = demoITTeam.teams ?? [];
+    List<DeveloperTeam> developerTeams = [];
+
+    for (Team team in teams) {
+      metricInfos.add(getEmptyMetricInfo(team));
+      setTeamDevelopers(team, developerTeams);
+    }
+
+    for (Case c in cases) {
+      for (DeveloperTeam dt in developerTeams) {
+        if (c.developer == dt.developer.name) {
+          MetricInfo metricInfo =
+              metricInfos.where((m) => m.title == dt.team.title).first;
+
+          metricInfo.ptsPassedQA += c.storyPoints;
+          metricInfo.rejectionsPassedQA += c.rejections;
+        }
+      }
+    }
+
+    sortMetricInfosByFailRate(metricInfos);
+
+    return metricInfos;
+  }
+
+  void sortMetricInfosByFailRate(List<MetricInfo> metricInfos) {
+    metricInfos.sort((a, b) {
+      if ((b.ptsPassedQA) == 0) {
+        return 0;
+      } else if ((a.ptsPassedQA) == 0) {
+        return 1;
+      } else {
+        return ((b.rejectionsPassedQA) / (b.ptsPassedQA))
+            .compareTo((a.rejectionsPassedQA) / (a.ptsPassedQA));
+      }
+    });
   }
 
   void sortMetricInfosByVelocityToGoal(List<MetricInfo> metricInfos) {

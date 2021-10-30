@@ -6,19 +6,19 @@ import 'package:admin/screens/dashboard/components/current_metric_pie_chart.dart
 import 'package:flutter/material.dart';
 
 class CurrentFailRateChart extends StatelessWidget {
-  final List<MetricInfo> currentMetricList;
+  final List<MetricInfo> metricInfos;
 
   const CurrentFailRateChart({
     Key? key,
-    required this.currentMetricList,
+    required this.metricInfos,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CurrentMetricPieChart(
-      title: '${calcTotalFailRate(currentMetricList).toStringAsFixed(0)}%',
+      title: '${calcTotalFailRate(metricInfos).toStringAsFixed(0)}%',
       subTitle: "of 10%",
-      pieChartData: getPieChartSectionData(currentMetricList),
+      pieChartData: getPieChartSectionData(metricInfos),
     );
   }
 
@@ -72,20 +72,23 @@ class CurrentFailRateChart extends StatelessWidget {
               (info.ptsPassedQA).toDouble());
     }
 
-    teamFailRateFractionOfTotalFailRate = (teamFailRate / sumOfTeamFailRates);
-    teamValue = totalFailRate * teamFailRateFractionOfTotalFailRate;
+    if (sumOfTeamFailRates > 0) {
+      teamFailRateFractionOfTotalFailRate = (teamFailRate / sumOfTeamFailRates);
+      teamValue = totalFailRate * teamFailRateFractionOfTotalFailRate;
+    }
+
     return teamValue;
   }
 
   List<PieChartMetricData> getPieChartSectionData(
-      List<MetricInfo> currentMetricList) {
+      List<MetricInfo> metricInfos) {
     List<PieChartMetricData> chartData = [];
 
-    double totalFailRate = calcTotalFailRate(currentMetricList);
+    double totalFailRate = calcTotalFailRate(metricInfos);
     double remainingFailRate = max(10.0 - totalFailRate, 0);
-    double sumOfTeamFailRates = calcSumOfTeamFailRates(currentMetricList);
+    double sumOfTeamFailRates = calcSumOfTeamFailRates(metricInfos);
 
-    for (var info in currentMetricList) {
+    for (var info in metricInfos) {
       double teamValue =
           calcTeamFailRateSectionValue(info, sumOfTeamFailRates, totalFailRate);
 
