@@ -1,6 +1,5 @@
 import 'package:admin/constants.dart';
-import 'package:admin/data/jira_api.dart';
-import 'package:admin/models/Case.dart';
+import 'package:admin/controllers/MetricController.dart';
 import 'package:admin/models/MetricInfo.dart';
 import 'package:admin/screens/dashboard/components/current_velocity_chart.dart';
 import 'package:flutter/material.dart';
@@ -16,23 +15,21 @@ class CurrentVelocity extends StatefulWidget {
 }
 
 class _CurrentVelocityState extends State<CurrentVelocity> {
-  late Future<List<Case>> caseList;
+  MetricController metricController = new MetricController();
 
   @override
   void initState() {
     super.initState();
-    caseList = fetchIssues(0);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Case>>(
-      future: caseList,
-      builder: (context, AsyncSnapshot<List<Case>> snapshot) {
-        if (snapshot.hasData) {
-          List<MetricInfo> metricInfos =
-              getTeamVelocityMetricsFromCases(snapshot.data ?? []);
+    MetricController controller = new MetricController();
 
+    return FutureBuilder<List<MetricInfo>>(
+      future: controller.getWeeklyTeamVelocityMetrics(0),
+      builder: (context, AsyncSnapshot<List<MetricInfo>> snapshot) {
+        if (snapshot.hasData && snapshot.data != null) {
           return Container(
             padding: EdgeInsets.all(defaultPadding),
             decoration: BoxDecoration(
@@ -51,16 +48,18 @@ class _CurrentVelocityState extends State<CurrentVelocity> {
                 ),
                 SizedBox(height: defaultPadding),
                 CurrentVelocityChart(
-                  metricInfos: metricInfos,
+                  metricInfos: snapshot.data!,
                 ),
                 Column(
-                  children: getCurrentVelocityCards(metricInfos),
+                  children: getCurrentVelocityCards(snapshot.data!),
                 ),
               ],
             ),
           );
+        } else if (snapshot.hasData) {
+          return Text('No Velocity Metrics Found');
         } else if (snapshot.hasError) {
-          return Text('Bad');
+          return Text('Error Retriving Velocity Metrics');
         }
 
         return const CircularProgressIndicator();
