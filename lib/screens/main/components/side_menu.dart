@@ -20,6 +20,11 @@ class SideMenu extends StatelessWidget {
             press: () {},
           ),
           DrawerListTile(
+            title: "History",
+            svgSrc: "assets/icons/menu_tran.svg",
+            press: () {},
+          ),
+          DrawerListTile(
             title: "Dashboard",
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {},
@@ -27,11 +32,6 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Scorecards",
             svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "History",
-            svgSrc: "assets/icons/menu_tran.svg",
             press: () {},
           ),
           DrawerListTile(
