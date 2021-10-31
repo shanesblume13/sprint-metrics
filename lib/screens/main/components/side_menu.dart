@@ -12,7 +12,12 @@ class SideMenu extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Image.asset("assets/images/logo.png"),
+            child: Image.asset("assets/images/dominion_logo.png"),
+          ),
+          DrawerListTile(
+            title: "Current Week",
+            svgSrc: "assets/icons/menu_task.svg",
+            press: () {},
           ),
           DrawerListTile(
             title: "Dashboard",
@@ -20,33 +25,13 @@ class SideMenu extends StatelessWidget {
             press: () {},
           ),
           DrawerListTile(
-            title: "Transaction",
-            svgSrc: "assets/icons/menu_tran.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Task",
-            svgSrc: "assets/icons/menu_task.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Documents",
+            title: "Scorecards",
             svgSrc: "assets/icons/menu_doc.svg",
             press: () {},
           ),
           DrawerListTile(
-            title: "Store",
-            svgSrc: "assets/icons/menu_store.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Notification",
-            svgSrc: "assets/icons/menu_notification.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Profile",
-            svgSrc: "assets/icons/menu_profile.svg",
+            title: "History",
+            svgSrc: "assets/icons/menu_tran.svg",
             press: () {},
           ),
           DrawerListTile(

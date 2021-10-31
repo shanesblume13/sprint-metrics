@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:admin/models/MetricInfo.dart';
-import 'package:admin/screens/dashboard/components/current_metric_pie_chart.dart';
+import 'package:admin/screens/current_week/components/current_metric_pie_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';

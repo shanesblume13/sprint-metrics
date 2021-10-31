@@ -1,11 +1,11 @@
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/current_fail_rate.dart';
+import 'package:admin/screens/current_week/components/current_fail_rate.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import 'components/header.dart';
 import 'components/current_velocity.dart';
 
-class DashboardScreen extends StatelessWidget {
+class CurrentWeekScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

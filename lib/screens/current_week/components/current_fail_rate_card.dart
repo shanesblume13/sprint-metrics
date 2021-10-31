@@ -1,4 +1,4 @@
-import 'package:admin/screens/dashboard/components/current_metric_card.dart';
+import 'package:admin/screens/current_week/components/current_metric_card.dart';
 import 'package:flutter/material.dart';
 
 class CurrentFailRateCard extends StatelessWidget {
@@ -27,8 +27,7 @@ class CurrentFailRateCard extends StatelessWidget {
       progressLineDisplay: '${calculateFailRate().toStringAsFixed(0)}%',
       progressLineCurrent: calculateFailRate(),
       progressLineMax: goal.toDouble(),
-      subTitle:
-          "$rejectionsPassedQA rej / $ptsPassedQA pts / ${calculateFailRate().toStringAsFixed(0)}% goal",
+      subTitle: "$rejectionsPassedQA rej / $ptsPassedQA pts / $goal% goal",
     );
   }
 
