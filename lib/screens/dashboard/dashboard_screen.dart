@@ -19,7 +19,7 @@ class DashboardScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 5,
+                  flex: 0,
                   child: Column(
                     children: [
                       //CurrentVelocityAlt(),

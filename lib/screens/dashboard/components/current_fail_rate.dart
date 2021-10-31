@@ -25,7 +25,7 @@ class _CurrentFailRateState extends State<CurrentFailRate> {
     MetricController controller = new MetricController();
 
     return FutureBuilder<List<MetricInfo>>(
-      future: controller.getWeeklyTeamFailRateMetrics(0),
+      future: controller.getWeeklyTeamFailRateMetrics(-1),
       builder: (context, AsyncSnapshot<List<MetricInfo>> snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           return Container(

@@ -27,7 +27,7 @@ class _CurrentVelocityState extends State<CurrentVelocity> {
     MetricController controller = new MetricController();
 
     return FutureBuilder<List<MetricInfo>>(
-      future: controller.getWeeklyTeamVelocityMetrics(0),
+      future: controller.getWeeklyTeamVelocityMetrics(-1),
       builder: (context, AsyncSnapshot<List<MetricInfo>> snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           return Container(
