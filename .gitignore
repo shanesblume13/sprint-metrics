@@ -10,6 +10,7 @@
 .history
 .svn/
 **/lib/data/jira_api.dart 
+**/lib/models/Team.dart
 
 # IntelliJ related
 *.iml
